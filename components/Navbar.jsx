@@ -6,27 +6,27 @@ import { Amiri, Tajawal } from "next/font/google";
 const amiri = Amiri({ subsets: ["arabic"], weight: ["700"], variable: "--font-amiri" });
 const tajawal = Tajawal({ subsets: ["arabic"], weight: ["300", "400", "500", "700"], variable: "--font-tajawal" });
 
+/* ── تصحيح الوقت ──── */
 const TIME_OFFSET_MS = 60 * 60 * 1000;
 const getNow = () => new Date(Date.now() + TIME_OFFSET_MS);
 
+/* ── الساعات الحية ─────────────────────────────────────── */
 const fmtOpts = { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false };
 const fmtDZ = new Intl.DateTimeFormat("ar-DZ-u-nu-latn", { ...fmtOpts, timeZone: "Africa/Algiers" });
-const fmtSA = new Intl.DateTimeFormat("ar-SA-u-nu-latn", { ...fmtOpts, timeZone: "Asia/Riyadh" });
 const fmtHijri = new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura", {
-    weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Riyadh",
+    weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Africa/Algiers",
 });
 const fmtGreg = new Intl.DateTimeFormat("ar-DZ-u-nu-latn", {
     day: "numeric", month: "long", year: "numeric", timeZone: "Africa/Algiers",
 });
 
 function useClocks() {
-    const [t, setT] = useState({ dz: "--:--:--", sa: "--:--:--", hijri: "...", greg: "..." });
+    const [t, setT] = useState({ dz: "--:--:--", hijri: "...", greg: "..." });
     useEffect(() => {
         const tick = () => {
             const now = getNow();
             setT({
                 dz: fmtDZ.format(now),
-                sa: fmtSA.format(now),
                 hijri: fmtHijri.format(now),
                 greg: fmtGreg.format(now),
             });
@@ -38,70 +38,17 @@ function useClocks() {
     return t;
 }
 
-const PRAYERS = [
-    ["Fajr", "الفجر"],
-    ["Dhuhr", "الظهر"],
-    ["Asr", "العصر"],
-    ["Maghrib", "المغرب"],
-    ["Isha", "العشاء"],
-];
-const PRAYING_WINDOW = 25;
-
-function usePrayerTimes() {
-    const [times, setTimes] = useState(null);
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await fetch("https://api.aladhan.com/v1/timingsByCity?city=Makkah&country=Saudi%20Arabia&method=4");
-                const json = await res.json();
-                setTimes(json?.data?.timings ?? null);
-            } catch {}
-        })();
-    }, []);
-    return times;
-}
-
-function prayerStatus(timings, timeZone) {
-    if (!timings) return null;
-    const [h, m] = new Intl.DateTimeFormat("en-GB", {
-        hour: "2-digit", minute: "2-digit", hour12: false, timeZone,
-    }).format(getNow()).split(":").map(Number);
-    const nowMin = h * 60 + m;
-
-    const list = PRAYERS.map(([key, ar]) => {
-        const [ph, pm] = timings[key].split(":").map(Number);
-        return { ar, min: ph * 60 + pm };
-    });
-
-    for (const p of list) {
-        if (nowMin >= p.min && nowMin < p.min + PRAYING_WINDOW) return { praying: true, name: p.ar };
-    }
-    const next = list.find((p) => p.min > nowMin) ?? { ...list[0], min: list[0].min + 1440 };
-    const diff = next.min - nowMin;
-    const hh = Math.floor(diff / 60), mm = diff % 60;
-    return { praying: false, name: next.ar, remaining: hh > 0 ? `${hh} س ${mm} د` : `${mm} د` };
-}
-
-const STAR =
-    "M25 0 L9.7 4.02 L17.68 17.68 L4.02 9.7 L0 25 L-4.02 9.7 L-17.68 17.68 " +
-    "L-9.7 4.02 L-25 0 L-9.7 -4.02 L-17.68 -17.68 L-4.02 -9.7 L0 -25 " +
-    "L4.02 -9.7 L17.68 -17.68 L9.7 -4.02 Z";
-
-function IslamicPattern({ id, className, animate = false }) {
+function KnowledgePattern({ id, className, animate = false }) {
     return (
         <svg className={`${className} ${animate ? "animate-pattern-drift" : ""}`} aria-hidden="true">
             <defs>
-                <pattern id={id} width="80" height="80" patternUnits="userSpaceOnUse">
-                    {[[0, 0], [80, 0], [0, 80], [80, 80], [40, 40]].map(([x, y], i) => (
-                        <g key={i} transform={`translate(${x} ${y})`}>
-                            <path d={STAR} fill="currentColor" fillOpacity=".22" stroke="currentColor" strokeWidth="1.2" />
-                            <path d={STAR} transform="scale(.55)" fill="none" stroke="currentColor" strokeWidth="1" />
-                            <circle r="3" fill="currentColor" />
-                        </g>
-                    ))}
-                    {[[40, 0], [0, 40], [80, 40], [40, 80]].map(([x, y], i) => (
-                        <circle key={i} cx={x} cy={y} r="2.5" fill="currentColor" fillOpacity=".8" />
-                    ))}
+                <pattern id={id} width="100" height="100" patternUnits="userSpaceOnUse">
+                    <g transform="translate(50 50) opacity-30">
+                        <circle r="40" fill="none" stroke="currentColor" strokeWidth="0.8" />
+                        <circle r="25" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="3 3" />
+                        <path d="M-40 0 L40 0 M0 -40 L0 40" stroke="currentColor" strokeWidth="0.5" />
+                        <circle r="3" fill="currentColor" />
+                    </g>
                 </pattern>
             </defs>
             <rect width="200%" height="200%" fill={`url(#${id})`} />
@@ -110,107 +57,132 @@ function IslamicPattern({ id, className, animate = false }) {
 }
 
 export default function Navbar() {
-    const { dz, sa, hijri, greg } = useClocks();
-    const prayerTimes = usePrayerTimes();
+    const { dz, hijri, greg } = useClocks();
     const [menuOpen, setMenuOpen] = useState(false);
-    const saPrayer = prayerStatus(prayerTimes, "Asia/Riyadh");
 
     const navLinks = [
         { label: "الرئيسية", href: "/" },
-        { label: "باقات الحج", href: "/#hajj" },
-        { label: "باقات العمرة", href: "/umrah" },
-        { label: "التأشيرات", href: "/#visas" },
-        { label: "اتصل بنا", href: "/#contact" },
+        { label: "الانضمام للنادي", href: "/join" },
+        { label: "المجلة والرأي", href: "/blogs" },
+        { label: "النشاطات القادمة", href: "/activities" },
+    ];
+
+    const SOCIAL = [
+        { href: "https://www.instagram.com/awareness___club?igsh=MWMxcDVzeHp1dDhkdg==", label: "Instagram", icon: (<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>) },
+        { href: "https://www.tiktok.com/@awarenessclub25?_r=1&_t=ZS-98xXpRAXhGH", label: "TikTok", icon: (<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z" /></svg>) },
+        { href: "https://www.facebook.com/share/1BSjrhNXYN/", label: "Facebook", icon: (<svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg>) },
     ];
 
     return (
-        <header dir="rtl" className={`${amiri.variable} ${tajawal.variable} font-[family-name:var(--font-tajawal)] text-[#5C4732]`}>
+        <header dir="rtl" className={`${amiri.variable} ${tajawal.variable} font-[family-name:var(--font-tajawal)] text-[#F4F6FC]`}>
+            <style>{`
+        @keyframes pattern-drift { from { transform: translate(0,0); } to { transform: translate(-100px,-100px); } }
+        .animate-pattern-drift { animation: pattern-drift 70s linear infinite; will-change: transform; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes glow { 0%,100% { box-shadow: 0 0 0 0 rgba(212,175,55,.3); } 50% { box-shadow: 0 0 0 14px rgba(212,175,55,0); } }
+      `}</style>
+
             {/* ── الشريط العلوي ── */}
-            <div className="relative overflow-hidden bg-[#5C4732] text-[#FAF6F0]">
-                <IslamicPattern id="pat-nav-top" className="absolute inset-0 h-full w-full text-[#C9A876]/30" animate />
-                <div className="relative flex flex-wrap items-center justify-center gap-x-10 gap-y-1 px-4 py-2 text-sm tracking-wide">
-                    <div className="flex items-center gap-2">
-                        <span>🇩🇿</span>
-                        <span className="font-medium text-[#C9A876]">الجزائر</span>
-                        <span className="font-bold tabular-nums" dir="ltr">{dz}</span>
+            <div className="relative overflow-hidden bg-[#001F3F] text-[#F4F6FC] border-b border-[#D4AF37]/20">
+                <KnowledgePattern id="pat-top-nav" className="absolute inset-0 h-full w-full text-[#D4AF37]/15" animate />
+                <div className="relative flex flex-col md:flex-row items-center justify-between gap-y-2 px-4 md:px-6 py-2.5 text-xs md:text-sm tracking-wide">
+                    {/* التوقيت والتاريخ - اليمين */}
+                    <div className="w-full md:w-auto flex items-center justify-center md:justify-start gap-2 sm:gap-3 text-center">
+                        <div className="flex items-center gap-1.5">
+                            <span>🇩🇿</span>
+                            <span className="font-medium text-[#D4AF37]">الجزائر</span>
+                            <span className="font-bold tabular-nums text-[#F4F6FC]" dir="ltr">{dz}</span>
+                        </div>
+                        <span className="text-[#D4AF37]/40">|</span>
+                        <div className="flex items-center gap-1.5 font-medium text-[#D4AF37]">
+                            <span className="animate-pulse">📜</span>
+                            <span suppressHydrationWarning>{hijri}</span>
+                            <span className="hidden sm:inline text-[#F4F6FC]/40">|</span>
+                            <span suppressHydrationWarning className="hidden sm:inline text-[#F4F6FC]/70">{greg}</span>
+                        </div>
                     </div>
-                    <div className="flex items-center gap-2 font-medium text-[#C9A876]">
-                        <span className="animate-pulse">☪</span>
-                        <span suppressHydrationWarning>{hijri}</span>
-                        <span className="text-[#FAF6F0]/40">|</span>
-                        <span suppressHydrationWarning className="text-[#FAF6F0]/90">{greg}</span>
+
+                    {/* الآية القرآنية في المنتصف */}
+                    <div className="w-full md:w-auto text-center font-[family-name:var(--font-amiri)] text-base md:text-xl font-extrabold text-[#D4AF37] drop-shadow-sm">
+                        ﴿ اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ ﴾
                     </div>
-                    <div className="flex items-center gap-2">
-                        <span>🇸🇦</span>
-                        <span className="font-medium text-[#C9A876]">السعودية</span>
-                        <span className="font-bold tabular-nums" dir="ltr">{sa}</span>
+
+                    {/* الكلية + شبكات التواصل - اليسار */}
+                    <div className="w-full md:w-auto flex items-center justify-center md:justify-end gap-3 text-xs font-semibold text-[#D4AF37]">
+                        <span className="hidden md:inline">⚖️ كلية الحقوق - باتنة 1</span>
+                        {SOCIAL.map((s) => (
+                            <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+                                className="flex items-center justify-center w-7 h-7 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] transition-all hover:bg-[#D4AF37] hover:text-[#0A1128]" aria-label={s.label}>
+                                {s.icon}
+                            </a>
+                        ))}
                     </div>
-                    {saPrayer && (
-                        saPrayer.praying ? (
-                            <div className="flex items-center gap-1.5 rounded-full bg-[#C9A876] px-3 py-0.5 text-xs font-bold text-[#5C4732] animate-pulse">
-                                🕌 يُصلّى الآن في مكة: صلاة {saPrayer.name}
-                            </div>
-                        ) : (
-                            <div className="flex items-center gap-1.5 text-xs">
-                                <span className="text-[#C9A876]">🕌 الصلاة القادمة في مكة:</span>
-                                <span className="font-bold">{saPrayer.name}</span>
-                                <span className="text-[#FAF6F0]/70">بعد {saPrayer.remaining}</span>
-                            </div>
-                        )
-                    )}
                 </div>
-                <div className="relative h-1 bg-gradient-to-l from-transparent via-[#C9A876] to-transparent" />
+                <div className="relative h-0.5 bg-gradient-to-l from-transparent via-[#D4AF37] to-transparent" />
             </div>
 
-            {/* ── شريط التنقل ── */}
-            <nav className="sticky top-0 z-50 border-b border-[#F1E8DC] bg-[#FAF6F0]/95 backdrop-blur">
+            {/* ── شريط التنقل الرئيسي ── */}
+            <nav className="sticky top-0 z-50 border-b border-[#D4AF37]/30 bg-[#0A1128]/95 backdrop-blur-md shadow-lg shadow-black/40">
                 <div className="flex items-center justify-between px-[6%] py-4">
+                    {/* زر الانضمام السريع (يمين) */}
                     <div className="hidden items-center gap-3 lg:flex">
-                        <a href="/umrah" className="rounded-full bg-[#8B6F52] px-6 py-2.5 text-sm font-bold text-[#FAF6F0] transition-all duration-150 hover:scale-105 hover:bg-[#5C4732]">
-                            احجز الآن
-                        </a>
-                        <a href="/#contact" className="rounded-full border-[1.5px] border-[#A98B6F] px-6 py-2.5 text-sm font-bold transition-all duration-150 hover:scale-105 hover:bg-[#A98B6F] hover:text-[#FAF6F0]">
-                            اتصل بنا
+                        <a href="/join" className="rounded-full bg-[#D4AF37] px-6 py-2.5 text-sm font-bold text-[#0A1128] transition-all duration-200 hover:scale-105 hover:bg-[#F4C430] [animation:glow_3s_ease-in-out_infinite]">
+                            انضم للنادي الآن ⚖️
                         </a>
                     </div>
 
-                    <ul className="hidden items-center gap-8 lg:flex">
+                    {/* الروابط في الوسط */}
+                    <ul className="hidden items-center gap-6 lg:flex">
                         {navLinks.map((link) => (
                             <li key={link.label}>
-                                <a href={link.href} className="group relative pb-1 text-sm font-medium text-[#8B6F52] transition-colors duration-150 hover:text-[#5C4732]">
+                                <a href={link.href} className="group relative pb-1 text-sm font-semibold text-[#F4F6FC] transition-colors duration-150 hover:text-[#D4AF37]">
                                     {link.label}
-                                    <span className="absolute bottom-0 right-0 h-0.5 w-0 bg-[#C9A876] transition-all duration-150 group-hover:w-full" />
+                                    <span className="absolute bottom-0 right-0 h-0.5 w-0 bg-[#D4AF37] transition-all duration-200 group-hover:w-full" />
                                 </a>
                             </li>
                         ))}
                     </ul>
 
+                    {/* الشعار (يسار) */}
                     <a
                         href="/"
-                        dir="ltr"
-                        className="group relative overflow-hidden rounded-2xl bg-black px-5 py-2 font-[family-name:var(--font-amiri)] text-4xl font-bold transition-all duration-150 hover:scale-105 hover:shadow-lg hover:shadow-black/30"
+                        className="group flex items-center gap-3 rounded-2xl bg-[#001F3F] px-4 py-2 border border-[#D4AF37]/30 transition-all duration-200 hover:border-[#D4AF37]"
                     >
-                        <span className="inline-block text-white transition-colors duration-150 group-hover:text-[#A98B6F]">Mel</span>
-                        <span className="inline-block text-[#A98B6F] transition-all duration-150 group-hover:-translate-y-1 group-hover:text-white">Go</span>
+                        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#D4AF37] text-[#0A1128] font-extrabold text-xl shadow-md">
+                            ⚖️
+                        </div>
+                        <div className="flex flex-col text-right">
+                            <span className="font-[family-name:var(--font-amiri)] text-xl font-bold text-[#F4F6FC] leading-none">نادي الوعي القانوني</span>
+                            <span className="text-[10px] text-[#D4AF37] font-semibold mt-1">جامعة باتنة 1</span>
+                        </div>
                     </a>
 
+                    {/* زر القائمة للجوال */}
                     <button onClick={() => setMenuOpen(!menuOpen)} className="flex flex-col gap-1.5 lg:hidden" aria-label="القائمة">
-                        <span className={`h-0.5 w-6 bg-[#5C4732] transition-all duration-150 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-                        <span className={`h-0.5 w-6 bg-[#5C4732] transition-all duration-150 ${menuOpen ? "opacity-0" : ""}`} />
-                        <span className={`h-0.5 w-6 bg-[#5C4732] transition-all duration-150 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+                        <span className={`h-0.5 w-6 bg-[#D4AF37] transition-all duration-150 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+                        <span className={`h-0.5 w-6 bg-[#D4AF37] transition-all duration-150 ${menuOpen ? "opacity-0" : ""}`} />
+                        <span className={`h-0.5 w-6 bg-[#D4AF37] transition-all duration-150 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
                     </button>
                 </div>
 
-                <div className={`grid overflow-hidden transition-all duration-200 lg:hidden ${menuOpen ? "grid-rows-[1fr] border-t border-[#F1E8DC]" : "grid-rows-[0fr]"}`}>
-                    <ul className="min-h-0 space-y-1 overflow-hidden px-[6%]">
+                {/* قائمة الجوال المنسدلة */}
+                <div className={`grid overflow-hidden transition-all duration-200 lg:hidden ${menuOpen ? "grid-rows-[1fr] border-t border-[#D4AF37]/20" : "grid-rows-[0fr]"}`}>
+                    <ul className="min-h-0 space-y-1 overflow-hidden px-[6%] py-2 bg-[#001F3F]">
                         {navLinks.map((link, i) => (
                             <li key={link.label} className={`transition-all duration-150 ${menuOpen ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0"}`} style={{ transitionDelay: `${i * 40}ms` }}>
-                                <a href={link.href} onClick={() => setMenuOpen(false)} className="block py-3 font-medium text-[#8B6F52] hover:text-[#5C4732]">{link.label}</a>
+                                <a href={link.href} onClick={() => setMenuOpen(false)} className="block py-2.5 font-semibold text-[#F4F6FC] hover:text-[#D4AF37]">{link.label}</a>
                             </li>
                         ))}
-                        <li className="flex gap-3 py-4">
-                            <a href="/umrah" onClick={() => setMenuOpen(false)} className="flex-1 rounded-full bg-[#8B6F52] px-5 py-2.5 text-center text-sm font-bold text-[#FAF6F0]">احجز الآن</a>
-                            <a href="/#contact" onClick={() => setMenuOpen(false)} className="flex-1 rounded-full border border-[#A98B6F] px-5 py-2.5 text-center text-sm font-bold">اتصل بنا</a>
+                        <li className="py-2 flex gap-3">
+                            {SOCIAL.map((s) => (
+                                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-[#D4AF37]/40 text-[#D4AF37] transition-all hover:bg-[#D4AF37] hover:text-[#0A1128]" aria-label={s.label}>
+                                    {s.icon}
+                                </a>
+                            ))}
+                        </li>
+                        <li className="py-3">
+                            <a href="/join" onClick={() => setMenuOpen(false)} className="block rounded-full bg-[#D4AF37] px-5 py-2.5 text-center text-sm font-bold text-[#0A1128]">انضم للنادي الآن ⚖️</a>
                         </li>
                     </ul>
                 </div>

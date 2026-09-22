@@ -5,26 +5,16 @@ import { Amiri, Tajawal } from "next/font/google";
 const amiri = Amiri({ subsets: ["arabic"], weight: ["700"], variable: "--font-amiri" });
 const tajawal = Tajawal({ subsets: ["arabic"], weight: ["300", "400", "500", "700"], variable: "--font-tajawal" });
 
-const STAR =
-    "M25 0 L9.7 4.02 L17.68 17.68 L4.02 9.7 L0 25 L-4.02 9.7 L-17.68 17.68 " +
-    "L-9.7 4.02 L-25 0 L-9.7 -4.02 L-17.68 -17.68 L-4.02 -9.7 L0 -25 " +
-    "L4.02 -9.7 L17.68 -17.68 L9.7 -4.02 Z";
-
-function IslamicPattern({ id, className }) {
+function KnowledgePattern({ id, className }) {
     return (
         <svg className={className} aria-hidden="true">
             <defs>
                 <pattern id={id} width="80" height="80" patternUnits="userSpaceOnUse">
-                    {[[0, 0], [80, 0], [0, 80], [80, 80], [40, 40]].map(([x, y], i) => (
-                        <g key={i} transform={`translate(${x} ${y})`}>
-                            <path d={STAR} fill="currentColor" fillOpacity=".22" stroke="currentColor" strokeWidth="1.2" />
-                            <path d={STAR} transform="scale(.55)" fill="none" stroke="currentColor" strokeWidth="1" />
-                            <circle r="3" fill="currentColor" />
-                        </g>
-                    ))}
-                    {[[40, 0], [0, 40], [80, 40], [40, 80]].map(([x, y], i) => (
-                        <circle key={i} cx={x} cy={y} r="2.5" fill="currentColor" fillOpacity=".8" />
-                    ))}
+                    <g transform="translate(40 40) opacity-25">
+                        <circle r="30" fill="none" stroke="currentColor" strokeWidth="0.8" />
+                        <path d="M-30 0 L30 0 M0 -30 L0 30" stroke="currentColor" strokeWidth="0.5" />
+                        <circle r="2" fill="currentColor" />
+                    </g>
                 </pattern>
             </defs>
             <rect width="200%" height="200%" fill={`url(#${id})`} />
@@ -35,53 +25,91 @@ function IslamicPattern({ id, className }) {
 export default function Description() {
     return (
         <section
+            id="about"
             dir="rtl"
-            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#5C4732] py-24 font-[family-name:var(--font-tajawal)] text-[#FAF6F0]`}
+            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#0A1128] py-20 font-[family-name:var(--font-tajawal)] text-[#F4F6FC] border-t border-[#D4AF37]/15`}
         >
-            <IslamicPattern id="pat-desc" className="absolute inset-0 h-full w-full animate-pattern-drift text-[#C9A876]/30" />
+            <KnowledgePattern id="pat-desc" className="absolute inset-0 h-full w-full animate-pattern-drift text-[#D4AF37]/10 pointer-events-none" />
 
-            <div className="relative px-[6%]">
-                <div className="mx-auto max-w-4xl text-center">
-                    <span className="mb-6 inline-block rounded-full bg-[#FAF6F0]/10 px-4 py-1.5 text-xs font-bold tracking-widest text-[#C9A876]">
-                        ✦ وكالتنا
-                    </span>
-
-                    <h2 className="mb-8 font-[family-name:var(--font-amiri)] text-4xl font-bold leading-snug md:text-6xl md:leading-snug">
-                        اكتشف العالم مع{" "}
-                        <span className="relative inline-block text-[#C9A876]">
-                            MelGo Travel
-                            <svg className="absolute -bottom-2 right-0 w-full" height="8" viewBox="0 0 200 8" preserveAspectRatio="none">
-                                <path d="M0 6 Q50 0 100 5 T200 4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                            </svg>
+            <div className="relative px-[6%] max-w-6xl mx-auto">
+                {/* ── أولًا: نشأة فكرة النادي وسبب التسمية ── */}
+                <div className="mb-16">
+                    <div className="flex items-center gap-3 mb-4">
+                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D4AF37] text-[#0A1128] font-bold text-lg shadow-md">
+                            1
                         </span>
-                    </h2>
+                        <h2 className="font-[family-name:var(--font-amiri)] text-3xl md:text-5xl font-bold text-[#D4AF37]">
+                            نشأة فكرة النادي وسبب التسمية
+                        </h2>
+                    </div>
 
-                    <p className="mx-auto mb-10 max-w-2xl text-lg font-light leading-loose text-[#FAF6F0]/80">
-                        في وكالتنا نؤمن أن السفر ليس مجرد انتقال من مكان إلى آخر، بل هو تجربة تصنع أجمل الذكريات. نقدم لكم أفضل العروض السياحية والفندقية المختارة بعناية لتوفير الراحة، الجودة، والأسعار المناسبة.
-                    </p>
+                    <div className="grid gap-8 md:grid-cols-2 items-center">
+                        <div className="space-y-4 leading-relaxed text-[#F4F6FC]/90 font-normal text-base md:text-lg">
+                            <p>
+                                تعود فكرة تأسيس نادي الوعي القانوني إلى مجموعة من الأفكار الإصلاحية والتوعوية التي ترسخت لدى الطالبين <strong className="text-[#D4AF37] font-bold">محمد شادة</strong> و<strong className="text-[#D4AF37] font-bold">منصف بوقجة</strong> عقب مطالعتهما لعدد من مؤلفات المفكر الجزائري <strong className="text-[#D4AF37] font-bold">مالك بن نبي</strong>، ولا سيما كتاب <em>مذكرات شاهد للقرن</em>.
+                            </p>
+                            <p>
+                                فقد أسهمت أفكار هذا المفكر في تشكيل أرضية فكرية خصبة لدى الطالبين، ورسخت لديهما الرغبة في المساهمة في نشر الوعي والمعرفة داخل الوسط الجامعي.
+                            </p>
+                            <p>
+                                وشاءت الظروف أن تجمعهما بالأستاذ <strong className="text-[#D4AF37] font-bold">محمد سمصار</strong>، الذي يتقاطع معهما في النزعة التوعوية والإصلاحية، فتلاقت الأفكار وتكاملت الرؤى، ليُقترح تأسيس نادٍ علمي وثقافي يحمل اسم <strong className="text-[#D4AF37] font-bold">«نادي الوعي القانوني»</strong>؛ وهي تسمية تجمع بين مجال تخصص النادي، المتمثل في القانون، وبين رسالته الأساسية القائمة على التوعية ونشر المعرفة وبناء الوعي لدى الطلبة.
+                            </p>
+                        </div>
 
-                    <a
-                        href="#"
-                        className="group relative inline-block overflow-hidden rounded-full bg-[#C9A876] px-12 py-4 text-base font-bold text-[#5C4732] transition-all duration-150 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/30"
-                    >
-                        <span className="relative z-10">اكتشف المزيد ←</span>
-                        <span className="absolute inset-0 -translate-x-full bg-gradient-to-l from-transparent via-white/30 to-transparent transition-transform duration-400 group-hover:translate-x-full" />
-                    </a>
+                        {/* بطاقة توضيحية لرمزية التسمية */}
+                        <div className="rounded-3xl border border-[#D4AF37]/30 bg-[#001F3F] p-8 shadow-xl backdrop-blur-sm">
+                            <h3 className="font-[family-name:var(--font-amiri)] text-2xl font-bold text-[#D4AF37] mb-4 text-center">
+                                ركائز الفكرة والتأسيس
+                            </h3>
+                            <div className="space-y-4">
+                                <div className="flex items-start gap-3 rounded-2xl bg-[#0A1128] p-4 border border-[#D4AF37]/20">
+                                    <span className="text-2xl">📚</span>
+                                    <div>
+                                        <h4 className="font-bold text-[#D4AF37] text-sm">المرجعية الفكرية</h4>
+                                        <p className="text-xs text-[#F4F6FC]/80 mt-1">مؤلفات المفكر مالك بن نبي (مذكرات شاهد للقرن)</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-3 rounded-2xl bg-[#0A1128] p-4 border border-[#D4AF37]/20">
+                                    <span className="text-2xl">👥</span>
+                                    <div>
+                                        <h4 className="font-bold text-[#D4AF37] text-sm">المؤسسون والمؤطرون</h4>
+                                        <p className="text-xs text-[#F4F6FC]/80 mt-1">الطالبان محمد شادة ومنصف بوقجة بالتأطير والإشراف مع الأستاذ محمد سمصار</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-3 rounded-2xl bg-[#0A1128] p-4 border border-[#D4AF37]/20">
+                                    <span className="text-2xl">💡</span>
+                                    <div>
+                                        <h4 className="font-bold text-[#D4AF37] text-sm">معنى التسمية</h4>
+                                        <p className="text-xs text-[#F4F6FC]/80 mt-1">الجمع بين تخصص القانون والرسالة الإصلاحية لبناء الوعي</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Stat strip */}
-                <div className="mt-20 grid grid-cols-2 gap-6 border-t border-[#FAF6F0]/15 pt-12 md:grid-cols-4">
-                    {[
-                        ["15+", "سنة من الخبرة"],
-                        ["10,000+", "عميل سعيد"],
-                        ["120+", "وجهة سياحية"],
-                        ["98%", "نسبة الرضا"],
-                    ].map(([num, label]) => (
-                        <div key={label} className="text-center transition-transform duration-100 hover:scale-105">
-                            <b className="block font-[family-name:var(--font-amiri)] text-3xl text-[#C9A876] tabular-nums md:text-4xl">{num}</b>
-                            <span className="mt-1 block text-sm tracking-wide text-[#FAF6F0]/70">{label}</span>
-                        </div>
-                    ))}
+                {/* ── ثانياً: التعريف بالنادي ── */}
+                <div className="rounded-3xl border border-[#D4AF37]/30 bg-[#001F3F] p-8 md:p-12 shadow-xl">
+                    <div className="flex items-center gap-3 mb-6">
+                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D4AF37] text-[#0A1128] font-bold text-lg shadow-md">
+                            2
+                        </span>
+                        <h2 className="font-[family-name:var(--font-amiri)] text-3xl md:text-4xl font-bold text-[#D4AF37]">
+                            التعريف بالنادي
+                        </h2>
+                    </div>
+
+                    <p className="text-base md:text-xl leading-relaxed text-[#F4F6FC]/90 font-normal mb-6">
+                        نادي الوعي القانوني هو نادٍ جامعي يمزج بين الطابع العلمي والثقافي والقانوني، وينشط على مستوى كلية الحقوق والعلوم السياسية بجامعة باتنة 1.
+                    </p>
+
+                    <p className="text-sm md:text-base leading-relaxed text-[#F4F6FC]/80 font-normal mb-6">
+                        ويهدف النادي إلى خلق فضاء جامعي يتيح للطلبة تطوير معارفهم ومهاراتهم، والتفاعل مع مختلف الفعاليات العلمية والثقافية، إلى جانب المساهمة في تنشيط الحياة الجامعية.
+                    </p>
+
+                    <div className="rounded-2xl border border-[#D4AF37]/30 bg-[#0A1128] p-4 text-xs md:text-sm text-[#D4AF37] font-semibold">
+                        📢 تحظى مختلف نشاطات النادي بالتغطية والنشر والتوثيق عبر صفحاته على مواقع التواصل الاجتماعي، بما يسمح بالتعريف بالنادي ونشاطاته وإبراز مختلف المبادرات التي يعمل أعضاؤه على تجسيدها.
+                    </div>
                 </div>
             </div>
         </section>

@@ -33,7 +33,7 @@ export default function SlidingImages() {
     const firstRowPart2 = useRef(null);
     const secondRowPart1 = useRef(null);
     const secondRowPart2 = useRef(null);
-    
+
     const xPercent = useRef(0);
     const direction = useRef(-1);
 

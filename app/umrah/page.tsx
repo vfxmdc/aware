@@ -4,7 +4,7 @@ import Footer from "@/components/footer";
 
 export default function UmrahPage() {
   return (
-    <main className="bg-[#FAF6F0] min-h-screen">
+    <main className="min-h-screen bg-[#0A1128] text-[#F4F6FC]">
       <Navbar />
       <UmrahPackages />
       <Footer />

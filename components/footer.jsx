@@ -5,143 +5,113 @@ import { Amiri, Tajawal } from "next/font/google";
 const amiri = Amiri({ subsets: ["arabic"], weight: ["700"], variable: "--font-amiri" });
 const tajawal = Tajawal({ subsets: ["arabic"], weight: ["300", "400", "500", "700"], variable: "--font-tajawal" });
 
-/* ── زخرفة "النجمة والصليب" ─────────────────────────────── */
-const STAR =
-    "M25 0 L9.7 4.02 L17.68 17.68 L4.02 9.7 L0 25 L-4.02 9.7 L-17.68 17.68 " +
-    "L-9.7 4.02 L-25 0 L-9.7 -4.02 L-17.68 -17.68 L-4.02 -9.7 L0 -25 " +
-    "L4.02 -9.7 L17.68 -17.68 L9.7 -4.02 Z";
-
-function IslamicPattern({ id, className }) {
-    return (
-        <svg className={className} aria-hidden="true">
-            <defs>
-                <pattern id={id} width="80" height="80" patternUnits="userSpaceOnUse">
-                    {[[0, 0], [80, 0], [0, 80], [80, 80], [40, 40]].map(([x, y], i) => (
-                        <g key={i} transform={`translate(${x} ${y})`}>
-                            <path d={STAR} fill="currentColor" fillOpacity=".22" stroke="currentColor" strokeWidth="1.2" />
-                            <path d={STAR} transform="scale(.55)" fill="none" stroke="currentColor" strokeWidth="1" />
-                            <circle r="3" fill="currentColor" />
-                        </g>
-                    ))}
-                    {[[40, 0], [0, 40], [80, 40], [40, 80]].map(([x, y], i) => (
-                        <circle key={i} cx={x} cy={y} r="2.5" fill="currentColor" fillOpacity=".8" />
-                    ))}
-                </pattern>
-            </defs>
-            <rect width="200%" height="200%" fill={`url(#${id})`} />
-        </svg>
-    );
-}
-
-const SOCIALS = [
-    { label: "إنستغرام", href: "https://www.instagram.com/melgo_tourisme_et_voyages_llc/" },
-    { label: "فيسبوك", href: "https://www.facebook.com/melakhsouvoyages/?locale=fr_FR" },
-    { label: "تيك توك", href: "https://www.tiktok.com/@melgo2025" },
-];
-
-const NAV_LINKS = [
-    { label: "الرئيسية", href: "/" },
-    { label: "باقات العمرة", href: "/umrah" },
-    { label: "باقات الحج", href: "/#hajj" },
-    { label: "التأشيرات", href: "/#visas" },
-    { label: "اتصل بنا", href: "/#contact" },
+const SOCIAL = [
+    {
+        href: "https://www.instagram.com/awareness___club?igsh=MWMxcDVzeHp1dDhkdg==",
+        label: "Instagram",
+        icon: (
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+        ),
+    },
+    {
+        href: "https://www.tiktok.com/@awarenessclub25?_r=1&_t=ZS-98xXpRAXhGH",
+        label: "TikTok",
+        icon: (
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z" />
+            </svg>
+        ),
+    },
+    {
+        href: "https://www.facebook.com/share/1BSjrhNXYN/",
+        label: "Facebook",
+        icon: (
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </svg>
+        ),
+    },
 ];
 
 export default function Footer() {
     return (
         <footer
             dir="rtl"
-            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#5C4732] font-[family-name:var(--font-tajawal)] text-[#FAF6F0]`}
+            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#001F3F] border-t border-[#D4AF37]/20 py-12 font-[family-name:var(--font-tajawal)] text-[#F4F6FC]`}
         >
-            <IslamicPattern id="pat-footer" className="absolute inset-0 h-full w-full animate-pattern-drift text-[#C9A876]/30" />
+            {/* Top gold divider line */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-l from-transparent via-[#D4AF37] to-transparent" />
 
-            {/* شريط ذهبي علوي */}
-            <div className="relative h-1 bg-gradient-to-l from-transparent via-[#C9A876] to-transparent" />
-
-            <div className="relative px-[6%] py-16">
-
-                {/* ── دعوة كبيرة للتواصل ── */}
-                <div className="mb-14 text-center">
-                    <a
-                        href="#"
-                        dir="ltr"
-                        className="group relative mb-6 inline-block overflow-hidden rounded-2xl bg-black px-6 py-2.5 font-[family-name:var(--font-amiri)] text-4xl font-bold transition-all duration-150 hover:scale-105 hover:shadow-lg hover:shadow-black/30"
-                    >
-                        <span className="inline-block text-white transition-colors duration-300 group-hover:text-[#A98B6F]">Mel</span>
-                        <span className="inline-block text-[#A98B6F] transition-all duration-300 group-hover:-translate-y-1 group-hover:text-white">Go</span>
-                    </a>
-
-                    <h2 className="font-[family-name:var(--font-amiri)] text-4xl font-bold leading-snug md:text-6xl">
-                        مستعد لرحلتك{" "}
-                        <span className="relative inline-block text-[#C9A876]">
-                            القادمة؟
-                            <svg className="absolute -bottom-2 right-0 w-full text-[#C9A876]" height="8" viewBox="0 0 200 8" preserveAspectRatio="none">
-                                <path d="M0 6 Q50 0 100 5 T200 4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                            </svg>
-                        </span>
-                    </h2>
-
-                    <a
-                        href="#"
-                        className="group relative mt-10 inline-block overflow-hidden rounded-full bg-[#C9A876] px-12 py-5 text-lg font-bold text-[#5C4732] transition-all duration-150 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/30"
-                    >
-                        <span className="relative z-10">تواصل معنا ←</span>
-                        <span className="absolute inset-0 -translate-x-full bg-gradient-to-l from-transparent via-white/30 to-transparent transition-transform duration-400 group-hover:translate-x-full" />
-                    </a>
-                </div>
-
-                {/* ── شبكة المعلومات والمحتوى ── */}
-                <div className="mb-14 grid gap-10 border-t border-b border-[#FAF6F0]/15 py-12 md:grid-cols-3">
-                    
-                    {/* عن الوكالة */}
-                    <div>
-                        <h3 className="mb-4 font-[family-name:var(--font-amiri)] text-2xl font-bold text-[#C9A876]">وكالة MelGo للسياحة والأسفار</h3>
-                        <p className="text-sm font-light leading-relaxed text-[#FAF6F0]/80">
-                            وكالة جزائرية معتمدة متخصصة في تنظيم رحلات الحج والعمرة والأسفار السياحية، مع تقديم أفضل خدمات الإقامة والتأشيرات والتأطير الروحاني المتميز.
-                        </p>
-                    </div>
-
-                    {/* روابط سريعة */}
-                    <div className="flex flex-col items-start md:items-center">
-                        <h3 className="mb-4 font-[family-name:var(--font-amiri)] text-2xl font-bold text-[#C9A876]">روابط سريعة</h3>
-                        <ul className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm text-[#FAF6F0]/80">
-                            {NAV_LINKS.map((link) => (
-                                <li key={link.label}>
-                                    <a href={link.href} className="transition-colors hover:text-[#C9A876]">
-                                        {link.label}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* وسائل التواصل الاجتماعي والمعلومات */}
-                    <div>
-                        <h3 className="mb-4 font-[family-name:var(--font-amiri)] text-2xl font-bold text-[#C9A876]">تابعنا على</h3>
-                        <div className="flex flex-wrap gap-3">
-                            {SOCIALS.map((soc) => (
-                                <a
-                                    key={soc.label}
-                                    href={soc.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="rounded-full border border-[#C9A876]/40 px-5 py-2 text-xs font-medium text-[#FAF6F0] transition-all duration-300 hover:border-[#C9A876] hover:bg-[#C9A876] hover:text-[#5C4732]"
-                                >
-                                    {soc.label}
-                                </a>
-                            ))}
+            <div className="relative px-[6%] max-w-6xl mx-auto grid gap-10 md:grid-cols-3 items-start">
+                {/* الشعار والنص */}
+                <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#D4AF37] text-[#0A1128] font-bold text-xl shadow-md">
+                            ⚖️
                         </div>
+                        <span className="font-[family-name:var(--font-amiri)] text-2xl font-bold text-[#F4F6FC]">
+                            نادي الوعي القانوني
+                        </span>
                     </div>
-
+                    <p className="text-xs text-[#F4F6FC]/60 leading-relaxed max-w-sm">
+                        فكرةٌ، أهدافٌ، وهيكلٌ تنظيمي نحو فضاء جامعي واعٍ. كلية الحقوق والعلوم السياسية - جامعة باتنة 1.
+                    </p>
+                    {/* Social Icons */}
+                    <div className="flex items-center gap-3 pt-1">
+                        {SOCIAL.map((s) => (
+                            <a
+                                key={s.label}
+                                href={s.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={s.label}
+                                className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] transition-all duration-200 hover:bg-[#D4AF37] hover:text-[#0A1128] hover:scale-110"
+                            >
+                                {s.icon}
+                            </a>
+                        ))}
+                    </div>
                 </div>
 
-                {/* ── أسفل الفوتر / الحقوق ── */}
-                <div className="flex flex-col items-center justify-between gap-4 text-xs font-light text-[#FAF6F0]/60 sm:flex-row">
-                    <p>© {new Date().getFullYear()} MelGo Travel & Tourism. جميع الحقوق محفوظة.</p>
-                    <p>صُمم بأعلى معايير الجودة والروحانية ✦</p>
+                {/* روابط سريعة */}
+                <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs font-bold text-[#D4AF37]/80">
+                    <a href="/" className="hover:text-[#D4AF37] transition-colors">الرئيسية</a>
+                    <a href="#about" className="hover:text-[#D4AF37] transition-colors">عن النادي</a>
+                    <a href="#goals" className="hover:text-[#D4AF37] transition-colors">الأهداف</a>
+                    <a href="/join" className="hover:text-[#D4AF37] transition-colors">الانضمام والنظام الداخلي</a>
+                    <a href="/blogs" className="hover:text-[#D4AF37] transition-colors">المجلة الرقمية</a>
+                    <a href="/activities" className="hover:text-[#D4AF37] transition-colors">النشاطات القادمة</a>
                 </div>
 
+                {/* حقوق النشر والآية */}
+                <div className="text-center md:text-left space-y-2">
+                    <p className="font-[family-name:var(--font-amiri)] text-base text-[#D4AF37] font-extrabold">
+                        ﴿ اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ ﴾
+                    </p>
+                    <p className="text-[11px] text-[#F4F6FC]/40 font-medium">
+                        جميع الحقوق محفوظة © {new Date().getFullYear()} نادي الوعي القانوني - باتنة 1
+                    </p>
+                    <div className="flex justify-center md:justify-start gap-2 pt-1">
+                        {SOCIAL.map((s) => (
+                            <a
+                                key={s.label}
+                                href={s.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={s.label}
+                                className="text-[10px] text-[#D4AF37]/60 hover:text-[#D4AF37] transition-colors font-semibold"
+                            >
+                                {s.label}
+                            </a>
+                        ))}
+                    </div>
+                </div>
             </div>
+
+            {/* Bottom glow */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent" />
         </footer>
     );
 }
