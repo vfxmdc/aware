@@ -60,7 +60,7 @@ export default function Testimonials() {
     return (
         <section
             dir="rtl"
-            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#FAF6F0] py-20 font-[family-name:var(--font-tajawal)] text-[#5C4732]`}
+            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#FAF6F0] py-20 font-[family-name:var(--font-arabic)] text-[#5C4732]`}
         >
             <IslamicPattern id="pat-test" className="absolute inset-0 h-full w-full animate-pattern-drift text-[#8B6F52]/35" />
 
@@ -69,7 +69,7 @@ export default function Testimonials() {
                 <span className="mb-4 inline-block rounded-full bg-[#F1E8DC] px-4 py-1.5 text-xs font-bold tracking-widest text-[#8B6F52]">
                     ✦ آراء عملائنا
                 </span>
-                <h2 className="font-[family-name:var(--font-amiri)] text-4xl font-bold md:text-5xl">ماذا يقول عملاؤنا</h2>
+                <h2 className="font-[family-name:var(--font-arabic)] text-4xl font-bold md:text-5xl">ماذا يقول عملاؤنا</h2>
                 <p className="mt-3 font-light text-[#8B6F52]">تجارب حقيقية من عملاء استمتعوا برحلاتهم معنا</p>
             </div>
 
@@ -78,7 +78,7 @@ export default function Testimonials() {
                 {testimonials.map((t, i) => (
                     <div
                         key={i}
-                        className="group flex flex-col gap-5 rounded-2xl border border-[#F1E8DC] bg-white p-7 shadow-sm transition-all duration-150 hover:-translate-y-1 hover:border-[#C9A876]/50 hover:shadow-lg hover:shadow-[#5C4732]/10"
+                        className="group flex flex-col gap-5 rounded-2xl border border-[#F1E8DC] bg-white p-7 shadow-sm transition-all duration-150 hover:-translate-y-1 hover:border-[#C9A876]/50 hover: hover:shadow-[#5C4732]/10"
                     >
                         {/* Quote icon */}
                         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C9A876" strokeWidth="1.5" strokeOpacity="0.5" className="shrink-0">

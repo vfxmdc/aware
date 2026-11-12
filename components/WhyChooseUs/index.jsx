@@ -55,18 +55,18 @@ export default function WhyChooseUs() {
         <section
             id="goals"
             dir="rtl"
-            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#001738] py-24 font-[family-name:var(--font-tajawal)] text-[#F4F6FC] border-t border-[#D4AF37]/15`}
+            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[var(--surface)] py-24 font-[family-name:var(--font-arabic)] text-[var(--label)] border-t border-[var(--accent)]/15`}
         >
-            <KnowledgePattern id="pat-goals" className="absolute inset-0 h-full w-full animate-pattern-drift text-[#D4AF37]/10 pointer-events-none" />
+            <KnowledgePattern id="pat-goals" className="absolute inset-0 h-full w-full animate-pattern-drift text-[var(--accent)]/10 pointer-events-none" />
 
             <div className="relative mb-16 px-[6%] text-center max-w-3xl mx-auto">
-                <span className="mb-4 inline-block rounded-full bg-[#001F3F] border border-[#D4AF37]/30 px-5 py-1.5 text-xs font-bold tracking-widest text-[#D4AF37]">
+                <span className="mb-4 inline-block rounded-full glass border border-[var(--accent)]/30 px-5 py-1.5 text-xs font-bold tracking-widest text-[var(--accent)]">
                     ✦ ثالثًا: أهداف نادي الوعي القانوني
                 </span>
-                <h2 className="font-[family-name:var(--font-amiri)] text-4xl md:text-5xl font-extrabold text-[#F4F6FC]">
+                <h2 className="font-[family-name:var(--font-arabic)] text-4xl md:text-5xl font-extrabold text-[var(--label)]">
                     رؤيتنا ورسالتنا السامية
                 </h2>
-                <p className="mt-4 font-normal text-[#F4F6FC]/70 text-base leading-relaxed">
+                <p className="mt-4 font-normal text-[var(--label)]/70 text-base leading-relaxed">
                     يسعى النادي إلى تحقيق مجموعة متكاملة من الأهداف نحو فضاء جامعي واعٍ ومبدع
                 </p>
             </div>
@@ -75,13 +75,13 @@ export default function WhyChooseUs() {
                 {goals.map((g, i) => (
                     <div
                         key={i}
-                        className="group flex flex-col gap-4 rounded-3xl border border-[#D4AF37]/30 bg-[#001F3F] p-8 shadow-md backdrop-blur-sm transition-all duration-200 hover:-translate-y-2 hover:border-[#D4AF37] hover:bg-[#002850] hover:shadow-xl"
+                        className="group flex flex-col gap-4 rounded-[22px] border border-[var(--accent)]/30 glass p-8  backdrop-blur-sm transition-all duration-200 hover:-translate-y-2 hover:border-[var(--accent)] hover:bg-[var(--surface)] hover:"
                     >
-                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0A1128] text-2xl border border-[#D4AF37]/30 transition-transform duration-200 group-hover:scale-110 group-hover:border-[#D4AF37]">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--input)] text-2xl border border-[var(--accent)]/30 transition-transform duration-200 group-hover:scale-110 group-hover:border-[var(--accent)]">
                             {g.icon}
                         </div>
-                        <h3 className="font-[family-name:var(--font-amiri)] text-2xl font-bold text-[#D4AF37]">{g.title}</h3>
-                        <p className="text-sm font-normal leading-relaxed text-[#F4F6FC]/85">{g.description}</p>
+                        <h3 className="font-[family-name:var(--font-arabic)] text-2xl font-bold text-[var(--accent)]">{g.title}</h3>
+                        <p className="text-sm font-normal leading-relaxed text-[var(--label)]/85">{g.description}</p>
                     </div>
                 ))}
             </div>

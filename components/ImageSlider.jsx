@@ -57,17 +57,17 @@ export default function ImageSlider() {
     return (
         <section
             dir="rtl"
-            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#0A1128] py-16 font-[family-name:var(--font-tajawal)]`}
+            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-transparent py-16 font-[family-name:var(--font-arabic)]`}
         >
             {/* Header */}
             <div className="text-center mb-10 px-6">
-                <span className="mb-3 inline-block rounded-full border border-[#D4AF37]/40 bg-[#001F3F] px-5 py-1.5 text-xs font-bold tracking-widest text-[#D4AF37]">
+                <span className="mb-3 inline-block rounded-full border border-[var(--accent)]/40 glass px-5 py-1.5 text-xs font-bold tracking-widest text-[var(--accent)]">
                     ✦ لحظاتنا الجامعية
                 </span>
-                <h2 className="font-[family-name:var(--font-amiri)] text-3xl md:text-4xl font-extrabold text-[#F4F6FC]">
+                <h2 className="font-[family-name:var(--font-arabic)] text-3xl md:text-4xl font-extrabold text-[var(--label)]">
                     من أنشطة وفعاليات النادي
                 </h2>
-                <p className="mt-2 text-sm text-[#F4F6FC]/70">
+                <p className="mt-2 text-sm text-[var(--label)]/70">
                     لقطات من مسيرة نادي الوعي القانوني — جامعة باتنة 1
                 </p>
             </div>
@@ -75,8 +75,8 @@ export default function ImageSlider() {
             {/* Slider Track */}
             <div className="relative overflow-hidden">
                 {/* Fade edges */}
-                <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#0A1128] to-transparent" />
-                <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#0A1128] to-transparent" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[var(--bg)] to-transparent" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[var(--bg)] to-transparent" />
 
                 <div
                     ref={trackRef}
@@ -86,7 +86,7 @@ export default function ImageSlider() {
                     {doubled.map((src, i) => (
                         <div
                             key={i}
-                            className="relative h-52 w-80 flex-shrink-0 overflow-hidden rounded-2xl border border-[#D4AF37]/20 shadow-xl transition-transform duration-300 hover:scale-105 hover:border-[#D4AF37]/60"
+                            className="relative h-52 w-80 flex-shrink-0 overflow-hidden rounded-2xl border border-[var(--accent)]/20  transition-transform duration-300 hover:scale-105 hover:border-[var(--accent)]/60"
                         >
                             <img
                                 src={encodeURI(src)}
@@ -95,8 +95,8 @@ export default function ImageSlider() {
                                 draggable={false}
                             />
                             {/* Golden overlay shimmer on hover */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1128]/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
-                                <span className="text-xs text-[#D4AF37] font-bold">نادي الوعي القانوني ⚖️</span>
+                            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)]/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+                                <span className="text-xs text-[var(--accent)] font-bold">نادي الوعي القانوني ⚖️</span>
                             </div>
                         </div>
                     ))}

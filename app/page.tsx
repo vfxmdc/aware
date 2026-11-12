@@ -7,7 +7,7 @@ import Footer from "@/components/footer";
 
 export default function Home() {
   return (
-    <main className="bg-[#0A1128] text-[#F4F6FC]">
+    <main className="bg-transparent text-[var(--label)]">
       <HeroSection />
       <Description />
       <WhyChooseUs />

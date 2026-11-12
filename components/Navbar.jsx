@@ -7,7 +7,7 @@ const amiri = Amiri({ subsets: ["arabic"], weight: ["700"], variable: "--font-am
 const tajawal = Tajawal({ subsets: ["arabic"], weight: ["300", "400", "500", "700"], variable: "--font-tajawal" });
 
 /* ── تصحيح الوقت ──── */
-const TIME_OFFSET_MS = 60 * 60 * 1000;
+const TIME_OFFSET_MS = 0;
 const getNow = () => new Date(Date.now() + TIME_OFFSET_MS);
 
 /* ── الساعات الحية ─────────────────────────────────────── */
@@ -59,6 +59,25 @@ function KnowledgePattern({ id, className, animate = false }) {
 export default function Navbar() {
     const { dz, hijri, greg } = useClocks();
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isDark, setIsDark] = useState(true);
+    useEffect(() => { setIsDark(document.documentElement.classList.contains("dark")); }, []);
+    const toggleTheme = () => {
+        const next = isDark ? "light" : "dark";
+        const el = document.documentElement;
+        el.classList.remove("dark", "light");
+        el.classList.add(next);
+        try { localStorage.setItem("app_theme", next); } catch (e) {}
+        setIsDark(!isDark);
+    };
+    const ThemeBtn = (
+        <button onClick={toggleTheme} className="icon-btn glass text-[var(--accent)]" aria-label="تبديل المظهر">
+            {isDark ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-[18px] h-[18px]"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+            ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-[18px] h-[18px]"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+            )}
+        </button>
+    );
 
     const navLinks = [
         { label: "الرئيسية", href: "/" },
@@ -74,7 +93,7 @@ export default function Navbar() {
     ];
 
     return (
-        <header dir="rtl" className={`${amiri.variable} ${tajawal.variable} font-[family-name:var(--font-tajawal)] text-[#F4F6FC]`}>
+        <header dir="rtl" className={`${amiri.variable} ${tajawal.variable} font-[family-name:var(--font-arabic)] text-[var(--label)]`}>
             <style>{`
         @keyframes pattern-drift { from { transform: translate(0,0); } to { transform: translate(-100px,-100px); } }
         .animate-pattern-drift { animation: pattern-drift 70s linear infinite; will-change: transform; }
@@ -83,50 +102,51 @@ export default function Navbar() {
       `}</style>
 
             {/* ── الشريط العلوي ── */}
-            <div className="relative overflow-hidden bg-[#001F3F] text-[#F4F6FC] border-b border-[#D4AF37]/20">
-                <KnowledgePattern id="pat-top-nav" className="absolute inset-0 h-full w-full text-[#D4AF37]/15" animate />
+            <div className="relative overflow-hidden glass text-[var(--label)] border-b border-[var(--accent)]/20">
+                <KnowledgePattern id="pat-top-nav" className="absolute inset-0 h-full w-full text-[var(--accent)]/15" animate />
                 <div className="relative flex flex-col md:flex-row items-center justify-between gap-y-2 px-4 md:px-6 py-2.5 text-xs md:text-sm tracking-wide">
                     {/* التوقيت والتاريخ - اليمين */}
                     <div className="w-full md:w-auto flex items-center justify-center md:justify-start gap-2 sm:gap-3 text-center">
                         <div className="flex items-center gap-1.5">
                             <span>🇩🇿</span>
-                            <span className="font-medium text-[#D4AF37]">الجزائر</span>
-                            <span className="font-bold tabular-nums text-[#F4F6FC]" dir="ltr">{dz}</span>
+                            <span className="font-medium text-[var(--accent)]">الجزائر</span>
+                            <span className="font-bold tabular-nums text-[var(--label)]" dir="ltr">{dz}</span>
                         </div>
-                        <span className="text-[#D4AF37]/40">|</span>
-                        <div className="flex items-center gap-1.5 font-medium text-[#D4AF37]">
+                        <span className="text-[var(--accent)]/40">|</span>
+                        <div className="flex items-center gap-1.5 font-medium text-[var(--accent)]">
                             <span className="animate-pulse">📜</span>
                             <span suppressHydrationWarning>{hijri}</span>
-                            <span className="hidden sm:inline text-[#F4F6FC]/40">|</span>
-                            <span suppressHydrationWarning className="hidden sm:inline text-[#F4F6FC]/70">{greg}</span>
+                            <span className="hidden sm:inline text-[var(--label)]/40">|</span>
+                            <span suppressHydrationWarning className="hidden sm:inline text-[var(--label)]/70">{greg}</span>
                         </div>
                     </div>
 
                     {/* الآية القرآنية في المنتصف */}
-                    <div className="w-full md:w-auto text-center font-[family-name:var(--font-amiri)] text-base md:text-xl font-extrabold text-[#D4AF37] drop-shadow-sm">
+                    <div className="w-full md:w-auto text-center font-[family-name:var(--font-arabic)] text-base md:text-xl font-extrabold text-[var(--accent)] drop-shadow-sm">
                         ﴿ اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ ﴾
                     </div>
 
                     {/* الكلية + شبكات التواصل - اليسار */}
-                    <div className="w-full md:w-auto flex items-center justify-center md:justify-end gap-3 text-xs font-semibold text-[#D4AF37]">
+                    <div className="w-full md:w-auto flex items-center justify-center md:justify-end gap-3 text-xs font-semibold text-[var(--accent)]">
                         <span className="hidden md:inline">⚖️ كلية الحقوق - باتنة 1</span>
                         {SOCIAL.map((s) => (
                             <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                                className="flex items-center justify-center w-7 h-7 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] transition-all hover:bg-[#D4AF37] hover:text-[#0A1128]" aria-label={s.label}>
+                                className="flex items-center justify-center w-7 h-7 rounded-full border border-[var(--accent)]/30 text-[var(--accent)] transition-all hover:bg-[var(--accent)] hover:text-[var(--on-accent)]" aria-label={s.label}>
                                 {s.icon}
                             </a>
                         ))}
                     </div>
                 </div>
-                <div className="relative h-0.5 bg-gradient-to-l from-transparent via-[#D4AF37] to-transparent" />
+                <div className="relative h-0.5 bg-gradient-to-l from-transparent via-[var(--accent)] to-transparent" />
             </div>
 
             {/* ── شريط التنقل الرئيسي ── */}
-            <nav className="sticky top-0 z-50 border-b border-[#D4AF37]/30 bg-[#0A1128]/95 backdrop-blur-md shadow-lg shadow-black/40">
+            <nav className="top-blur">
                 <div className="flex items-center justify-between px-[6%] py-4">
                     {/* زر الانضمام السريع (يمين) */}
                     <div className="hidden items-center gap-3 lg:flex">
-                        <a href="/join" className="rounded-full bg-[#D4AF37] px-6 py-2.5 text-sm font-bold text-[#0A1128] transition-all duration-200 hover:scale-105 hover:bg-[#F4C430] [animation:glow_3s_ease-in-out_infinite]">
+                        {ThemeBtn}
+                        <a href="/join" className="rounded-full bg-[var(--accent)] px-6 py-2.5 text-sm font-bold text-[var(--on-accent)] transition-all duration-200 hover:scale-105 hover:bg-[var(--accent-hover)] [animation:glow_3s_ease-in-out_infinite]">
                             انضم للنادي الآن ⚖️
                         </a>
                     </div>
@@ -135,9 +155,9 @@ export default function Navbar() {
                     <ul className="hidden items-center gap-6 lg:flex">
                         {navLinks.map((link) => (
                             <li key={link.label}>
-                                <a href={link.href} className="group relative pb-1 text-sm font-semibold text-[#F4F6FC] transition-colors duration-150 hover:text-[#D4AF37]">
+                                <a href={link.href} className="group relative pb-1 text-sm font-semibold text-[var(--label)] transition-colors duration-150 hover:text-[var(--accent)]">
                                     {link.label}
-                                    <span className="absolute bottom-0 right-0 h-0.5 w-0 bg-[#D4AF37] transition-all duration-200 group-hover:w-full" />
+                                    <span className="absolute bottom-0 right-0 h-0.5 w-0 bg-[var(--accent)] transition-all duration-200 group-hover:w-full" />
                                 </a>
                             </li>
                         ))}
@@ -146,43 +166,43 @@ export default function Navbar() {
                     {/* الشعار (يسار) */}
                     <a
                         href="/"
-                        className="group flex items-center gap-3 rounded-2xl bg-[#001F3F] px-4 py-2 border border-[#D4AF37]/30 transition-all duration-200 hover:border-[#D4AF37]"
+                        className="group flex items-center gap-3 rounded-2xl glass px-4 py-2 border border-[var(--accent)]/30 transition-all duration-200 hover:border-[var(--accent)]"
                     >
-                        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#D4AF37] text-[#0A1128] font-extrabold text-xl shadow-md">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[var(--accent)] text-[var(--on-accent)] font-extrabold text-xl ">
                             ⚖️
                         </div>
                         <div className="flex flex-col text-right">
-                            <span className="font-[family-name:var(--font-amiri)] text-xl font-bold text-[#F4F6FC] leading-none">نادي الوعي القانوني</span>
-                            <span className="text-[10px] text-[#D4AF37] font-semibold mt-1">جامعة باتنة 1</span>
+                            <span className="font-[family-name:var(--font-arabic)] text-xl font-bold text-[var(--label)] leading-none">نادي الوعي القانوني</span>
+                            <span className="text-[10px] text-[var(--accent)] font-semibold mt-1">جامعة باتنة 1</span>
                         </div>
                     </a>
 
                     {/* زر القائمة للجوال */}
-                    <button onClick={() => setMenuOpen(!menuOpen)} className="flex flex-col gap-1.5 lg:hidden" aria-label="القائمة">
-                        <span className={`h-0.5 w-6 bg-[#D4AF37] transition-all duration-150 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-                        <span className={`h-0.5 w-6 bg-[#D4AF37] transition-all duration-150 ${menuOpen ? "opacity-0" : ""}`} />
-                        <span className={`h-0.5 w-6 bg-[#D4AF37] transition-all duration-150 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
-                    </button>
+                    <div className="flex items-center gap-2 lg:hidden">{ThemeBtn}<button onClick={() => setMenuOpen(!menuOpen)} className="icon-btn glass flex flex-col gap-1.5" aria-label="القائمة">
+                        <span className={`h-0.5 w-4 bg-[var(--accent)] transition-all duration-150 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+                        <span className={`h-0.5 w-4 bg-[var(--accent)] transition-all duration-150 ${menuOpen ? "opacity-0" : ""}`} />
+                        <span className={`h-0.5 w-4 bg-[var(--accent)] transition-all duration-150 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+                    </button></div>
                 </div>
 
                 {/* قائمة الجوال المنسدلة */}
-                <div className={`grid overflow-hidden transition-all duration-200 lg:hidden ${menuOpen ? "grid-rows-[1fr] border-t border-[#D4AF37]/20" : "grid-rows-[0fr]"}`}>
-                    <ul className="min-h-0 space-y-1 overflow-hidden px-[6%] py-2 bg-[#001F3F]">
+                <div className={`grid overflow-hidden transition-all duration-200 lg:hidden ${menuOpen ? "grid-rows-[1fr] border-t border-[var(--accent)]/20" : "grid-rows-[0fr]"}`}>
+                    <ul className="min-h-0 space-y-1 overflow-hidden px-[6%] py-2 glass-strong mx-4 mb-3 rounded-[22px]">
                         {navLinks.map((link, i) => (
                             <li key={link.label} className={`transition-all duration-150 ${menuOpen ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0"}`} style={{ transitionDelay: `${i * 40}ms` }}>
-                                <a href={link.href} onClick={() => setMenuOpen(false)} className="block py-2.5 font-semibold text-[#F4F6FC] hover:text-[#D4AF37]">{link.label}</a>
+                                <a href={link.href} onClick={() => setMenuOpen(false)} className="block py-2.5 font-semibold text-[var(--label)] hover:text-[var(--accent)]">{link.label}</a>
                             </li>
                         ))}
                         <li className="py-2 flex gap-3">
                             {SOCIAL.map((s) => (
                                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-[#D4AF37]/40 text-[#D4AF37] transition-all hover:bg-[#D4AF37] hover:text-[#0A1128]" aria-label={s.label}>
+                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-[var(--accent)]/40 text-[var(--accent)] transition-all hover:bg-[var(--accent)] hover:text-[var(--on-accent)]" aria-label={s.label}>
                                     {s.icon}
                                 </a>
                             ))}
                         </li>
                         <li className="py-3">
-                            <a href="/join" onClick={() => setMenuOpen(false)} className="block rounded-full bg-[#D4AF37] px-5 py-2.5 text-center text-sm font-bold text-[#0A1128]">انضم للنادي الآن ⚖️</a>
+                            <a href="/join" onClick={() => setMenuOpen(false)} className="block rounded-full bg-[var(--accent)] px-5 py-2.5 text-center text-sm font-bold text-[var(--on-accent)]">انضم للنادي الآن ⚖️</a>
                         </li>
                     </ul>
                 </div>

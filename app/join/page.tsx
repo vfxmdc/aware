@@ -4,7 +4,7 @@ import Footer from "@/components/footer";
 
 export default function JoinPage() {
     return (
-        <main className="min-h-screen bg-[#0A1128] text-[#F4F6FC]">
+        <main className="min-h-screen bg-transparent text-[var(--label)]">
             <Navbar />
             <UmrahPackages />
             <Footer />

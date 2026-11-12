@@ -16,7 +16,7 @@ function LampIcon({ className = "w-10 h-10" }) {
             <path d="M12 42C12 36.5 21 34 32 34C43 34 52 36.5 52 42C52 45 44 47 32 47C20 47 12 45 12 42Z" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
             <path d="M20 45.5L23 54C23.5 55.5 25 56.5 26.5 56.5H37.5C39 56.5 40.5 55.5 41 54L44 45.5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
             <path d="M22 56.5H42V59.5C42 61 40.5 62 39 62H25C23.5 62 22 61 22 59.5V56.5Z" fill="currentColor" />
-            <circle cx="32" cy="20" r="4" fill="#D4AF37" className="animate-pulse" />
+            <circle cx="32" cy="20" r="4" fill="var(--accent)" className="animate-pulse" />
         </svg>
     );
 }
@@ -103,54 +103,54 @@ export default function HeroSection() {
     ];
 
     return (
-        <div id="hero" dir="rtl" className={`${amiri.variable} ${tajawal.variable} bg-[#0A1128] font-[family-name:var(--font-tajawal)] text-[#F4F6FC]`}>
+        <div id="hero" dir="rtl" className={`${amiri.variable} ${tajawal.variable} bg-[var(--input)] font-[family-name:var(--font-arabic)] text-[var(--label)]`}>
             <Navbar />
 
             {/* ── قسم واجهة البطل الرئيسية (Hero Section) ── */}
             <section className="relative overflow-hidden py-16 lg:py-24">
                 <KnowledgePattern
                     id="pat-hero"
-                    className="absolute inset-0 h-full w-full text-[#D4AF37]/10 [mask-image:radial-gradient(ellipse_70%_70%_at_50%_40%,transparent_10%,black_80%)]"
+                    className="absolute inset-0 h-full w-full text-[var(--accent)]/10 [mask-image:radial-gradient(ellipse_70%_70%_at_50%_40%,transparent_10%,black_80%)]"
                 />
 
                 <div className="relative grid items-center gap-12 px-[6%] lg:grid-cols-[1.15fr_0.85fr]">
                     <div>
-                        <div className={`mb-6 inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/30 bg-[#001F3F] px-4 py-2 text-xs font-bold text-[#D4AF37] shadow-sm ${reveal(0)}`}>
-                            <LampIcon className="w-5 h-5 text-[#D4AF37]" />
+                        <div className={`mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--accent)]/30 glass px-4 py-2 text-xs font-bold text-[var(--accent)] shadow-sm ${reveal(0)}`}>
+                            <LampIcon className="w-5 h-5 text-[var(--accent)]" />
                             <span>فكرةٌ، أهدافٌ، وهيكلٌ تنظيمي نحو فضاء جامعي واعٍ</span>
                         </div>
 
-                        <h1 className={`mb-6 font-[family-name:var(--font-amiri)] text-4xl font-extrabold leading-snug text-[#F4F6FC] md:text-6xl md:leading-tight ${reveal(150)}`}>
+                        <h1 className={`mb-6 font-[family-name:var(--font-arabic)] text-4xl font-extrabold leading-snug text-[var(--label)] md:text-6xl md:leading-tight ${reveal(150)}`}>
                             نادي الوعي القانوني{" "}
-                            <span className="relative block text-[#D4AF37] mt-2">
+                            <span className="relative block text-[var(--accent)] mt-2">
                                 «من أجل وعيٍ مستديم»
-                                <svg className="absolute -bottom-3 right-0 w-full text-[#D4AF37]" height="10" viewBox="0 0 200 10" preserveAspectRatio="none">
+                                <svg className="absolute -bottom-3 right-0 w-full text-[var(--accent)]" height="10" viewBox="0 0 200 10" preserveAspectRatio="none">
                                     <path d="M0 8 Q50 0 100 7 T200 6" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
                                 </svg>
                             </span>
                         </h1>
 
-                        <p className={`mb-8 max-w-xl font-light leading-relaxed text-[#F4F6FC]/80 text-base md:text-lg ${reveal(300)}`}>
+                        <p className={`mb-8 max-w-xl font-light leading-relaxed text-[var(--label)]/80 text-base md:text-lg ${reveal(300)}`}>
                             نادٍ جامعي يمزج بين الطابع العلمي والثقافي والقانوني بكلية الحقوق والعلوم السياسية بجامعة باتنة 1. يسعى لبناء طالب واعٍ ومؤثر يرافق وعيه مجتمعه أينما حل.
                         </p>
 
                         {/* اقتباس الملهم */}
-                        <div className={`mb-9 rounded-2xl border border-[#D4AF37]/30 bg-[#001F3F] p-5 shadow-sm ${reveal(400)}`}>
-                            <p className="font-[family-name:var(--font-amiri)] text-lg text-[#D4AF37] font-semibold">
+                        <div className={`mb-9 rounded-2xl border border-[var(--accent)]/30 glass p-5 shadow-sm ${reveal(400)}`}>
+                            <p className="font-[family-name:var(--font-arabic)] text-lg text-[var(--accent)] font-semibold">
                                 "المؤمن كالغيث أينما حلّ نفع..."
                             </p>
-                            <span className="text-xs text-[#F4F6FC]/70 mt-1 block">رؤيتنا الأساسية: الوعي المتحصل عليه يرافق الطالب خارج أسوار الجامعة</span>
+                            <span className="text-xs text-[var(--label)]/70 mt-1 block">رؤيتنا الأساسية: الوعي المتحصل عليه يرافق الطالب خارج أسوار الجامعة</span>
                         </div>
 
                         <div className={`flex flex-wrap gap-4 ${reveal(500)}`}>
-                            <a href="/join" className="group relative overflow-hidden rounded-full bg-[#D4AF37] px-8 py-4 font-bold text-[#0A1128] shadow-lg transition-all duration-200 hover:-translate-y-1 hover:bg-[#F4C430]">
+                            <a href="/join" className="group relative overflow-hidden rounded-full bg-[var(--accent)] px-8 py-4 font-bold text-[var(--on-accent)]  transition-all duration-200 hover:-translate-y-1 hover:bg-[var(--accent-hover)]">
                                 <span className="relative z-10 flex items-center gap-2">
                                     <span>انضم إلى النادي</span>
                                     <span>←</span>
                                 </span>
                                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-l from-transparent via-white/30 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
                             </a>
-                            <a href="#about" className="rounded-full border-2 border-[#D4AF37]/40 px-8 py-4 font-bold text-[#F4F6FC] transition-all duration-200 hover:-translate-y-1 hover:border-[#D4AF37] hover:bg-[#001F3F]">
+                            <a href="#about" className="rounded-full border-2 border-[var(--accent)]/40 px-8 py-4 font-bold text-[var(--label)] transition-all duration-200 hover:-translate-y-1 hover:border-[var(--accent)] hover:glass">
                                 تعرّف على نشأة النادي
                             </a>
                         </div>
@@ -159,35 +159,35 @@ export default function HeroSection() {
                     {/* البطاقة التفاعلية البارزة */}
                     <div
                         ref={cardRef}
-                        className={`relative flex min-h-[380px] flex-col items-center justify-center overflow-hidden rounded-3xl border-2 border-[#D4AF37]/30 bg-gradient-to-br from-[#001F3F] via-[#0A1128] to-[#001530] p-8 text-center shadow-2xl transition-transform duration-200 ease-out will-change-transform lg:min-h-[460px] ${reveal(300)}`}
+                        className={`relative flex min-h-[380px] flex-col items-center justify-center overflow-hidden rounded-[22px] border-2 border-[var(--accent)]/30 bg-gradient-to-br from-[var(--surface)] via-[var(--bg)] to-[var(--surface)] p-8 text-center shadow-2xl transition-transform duration-200 ease-out will-change-transform lg:min-h-[460px] ${reveal(300)}`}
                     >
-                        <KnowledgePattern id="pat-card" className="absolute inset-0 h-full w-full text-[#D4AF37]/20" animate />
+                        <KnowledgePattern id="pat-card" className="absolute inset-0 h-full w-full text-[var(--accent)]/20" animate />
 
                         {/* أيقونات شرفية في الأعلي */}
                         <div className="relative mb-6 flex items-center justify-center gap-6">
-                            <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#D4AF37]/40 bg-[#001F3F] text-[#D4AF37] shadow-md">
+                            <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[var(--accent)]/40 glass text-[var(--accent)] ">
                                 <LampIcon className="w-10 h-10" />
                             </div>
-                            <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#D4AF37]/40 bg-[#001F3F] text-[#D4AF37] shadow-md">
+                            <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[var(--accent)]/40 glass text-[var(--accent)] ">
                                 <ScalesIcon className="w-10 h-10" />
                             </div>
                         </div>
 
-                        <h3 className="relative mb-2 font-[family-name:var(--font-amiri)] text-3xl font-extrabold text-[#D4AF37]">
+                        <h3 className="relative mb-2 font-[family-name:var(--font-arabic)] text-3xl font-extrabold text-[var(--accent)]">
                             نادي الوعي القانوني
                         </h3>
-                        <p className="relative max-w-xs text-xs text-[#F4F6FC]/70 leading-relaxed font-medium">
+                        <p className="relative max-w-xs text-xs text-[var(--label)]/70 leading-relaxed font-medium">
                             جامعة باتنة 1 · كلية الحقوق والعلوم السياسية
                         </p>
 
                         <div className="relative mt-6 grid grid-cols-2 gap-3 w-full max-w-xs">
-                            <div className="rounded-xl border border-[#D4AF37]/20 bg-[#001F3F] p-3 text-center shadow-sm">
-                                <span className="block text-xl font-bold text-[#D4AF37]">20+</span>
-                                <span className="text-[11px] text-[#F4F6FC]/70 font-medium">عضو مؤسس ومنخرط</span>
+                            <div className="rounded-xl border border-[var(--accent)]/20 glass p-3 text-center shadow-sm">
+                                <span className="block text-xl font-bold text-[var(--accent)]">20+</span>
+                                <span className="text-[11px] text-[var(--label)]/70 font-medium">عضو مؤسس ومنخرط</span>
                             </div>
-                            <div className="rounded-xl border border-[#D4AF37]/20 bg-[#001F3F] p-3 text-center shadow-sm">
-                                <span className="block text-xl font-bold text-[#D4AF37]">3</span>
-                                <span className="text-[11px] text-[#F4F6FC]/70 font-medium">لجان دائمة مخصصة</span>
+                            <div className="rounded-xl border border-[var(--accent)]/20 glass p-3 text-center shadow-sm">
+                                <span className="block text-xl font-bold text-[var(--accent)]">3</span>
+                                <span className="text-[11px] text-[var(--label)]/70 font-medium">لجان دائمة مخصصة</span>
                             </div>
                         </div>
 
@@ -195,7 +195,7 @@ export default function HeroSection() {
                         <div className="relative mt-5 flex items-center gap-3">
                             {SOCIAL.map((s) => (
                                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] transition-all hover:bg-[#D4AF37] hover:text-[#0A1128]" aria-label={s.label}>
+                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-[var(--accent)]/30 text-[var(--accent)] transition-all hover:bg-[var(--accent)] hover:text-[var(--on-accent)]" aria-label={s.label}>
                                     {s.icon}
                                 </a>
                             ))}

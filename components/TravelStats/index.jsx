@@ -69,7 +69,7 @@ function StatCard({ stat }) {
     const fmt = new Intl.NumberFormat("ar-DZ-u-nu-latn");
     return (
         <div ref={ref} className="group text-center transition-transform duration-100 hover:scale-105">
-            <b className="block font-[family-name:var(--font-amiri)] text-4xl font-bold text-[#C9A876] tabular-nums md:text-5xl">
+            <b className="block font-[family-name:var(--font-arabic)] text-4xl font-bold text-[#C9A876] tabular-nums md:text-5xl">
                 {fmt.format(val)}{stat.suffix}
             </b>
             <span className="mt-1 block text-base font-bold text-[#FAF6F0]">{stat.label}</span>
@@ -82,7 +82,7 @@ export default function TravelStats() {
     return (
         <section
             dir="rtl"
-            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#5C4732] py-20 font-[family-name:var(--font-tajawal)] text-[#FAF6F0]`}
+            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#5C4732] py-20 font-[family-name:var(--font-arabic)] text-[#FAF6F0]`}
         >
             <IslamicPattern id="pat-stats" className="absolute inset-0 h-full w-full animate-pattern-drift text-[#C9A876]/30" />
             <div className="relative h-1 bg-gradient-to-l from-transparent via-[#C9A876] to-transparent" />
@@ -92,7 +92,7 @@ export default function TravelStats() {
                     <span className="mb-4 inline-block rounded-full bg-[#FAF6F0]/10 px-4 py-1.5 text-xs font-bold tracking-widest text-[#C9A876]">
                         ✦ أرقامنا تتحدث
                     </span>
-                    <h2 className="font-[family-name:var(--font-amiri)] text-4xl font-bold md:text-5xl">إنجازاتنا بالأرقام</h2>
+                    <h2 className="font-[family-name:var(--font-arabic)] text-4xl font-bold md:text-5xl">إنجازاتنا بالأرقام</h2>
                 </div>
 
                 <div className="grid grid-cols-2 gap-10 md:grid-cols-4">

@@ -24,18 +24,18 @@ export async function POST(request: Request) {
                 `📧 <b>البريد الإلكتروني:</b> ${data.email || "غير محدد"}\n` +
                 `📞 <b>رقم الهاتف:</b> ${data.phone || "غير محدد"}\n` +
                 `🎓 <b>التخصص/الكلية:</b> ${data.faculty || "غير محدد"}\n` +
-                `⏰ <b>التاريخ:</b> ${new Date().toLocaleString("ar-DZ")}`;
+                `⏰ <b>التاريخ:</b> ${new Date().toLocaleString("ar-DZ", { timeZone: "Africa/Algiers", hour12: false })}`;
         } else if (type === "article") {
             message = `📰 <b>مقال جديد مقدم للمجلة الإلكترونية</b>\n\n` +
                 `✍️ <b>اسم المؤلف:</b> ${data.authorName || "غير محدد"}\n` +
                 `📖 <b>عنوان المقال:</b> ${data.articleTitle || "غير محدد"}\n` +
                 `📝 <b>الملخص والنص:</b>\n${data.articleContent || "بدون نص"}\n\n` +
-                `⏰ <b>التاريخ:</b> ${new Date().toLocaleString("ar-DZ")}`;
+                `⏰ <b>التاريخ:</b> ${new Date().toLocaleString("ar-DZ", { timeZone: "Africa/Algiers", hour12: false })}`;
         } else if (type === "feedback") {
             message = `💡 <b>مقترح/رأي جديد</b>\n\n` +
                 `👤 <b>الاسم:</b> ${data.name || "مجهول"}\n` +
                 `💭 <b>المقترح/الفكرة:</b>\n${data.feedback || "بدون نص"}\n\n` +
-                `⏰ <b>التاريخ:</b> ${new Date().toLocaleString("ar-DZ")}`;
+                `⏰ <b>التاريخ:</b> ${new Date().toLocaleString("ar-DZ", { timeZone: "Africa/Algiers", hour12: false })}`;
         } else {
             message = `📩 <b>رسالة جديدة من الموقع</b>\n\n${JSON.stringify(data, null, 2)}`;
         }

@@ -39,23 +39,23 @@ export default function Footer() {
     return (
         <footer
             dir="rtl"
-            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#001F3F] border-t border-[#D4AF37]/20 py-12 font-[family-name:var(--font-tajawal)] text-[#F4F6FC]`}
+            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden glass border-t border-[var(--accent)]/20 py-12 font-[family-name:var(--font-arabic)] text-[var(--label)]`}
         >
             {/* Top gold divider line */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-l from-transparent via-[#D4AF37] to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-l from-transparent via-[var(--accent)] to-transparent" />
 
             <div className="relative px-[6%] max-w-6xl mx-auto grid gap-10 md:grid-cols-3 items-start">
                 {/* الشعار والنص */}
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#D4AF37] text-[#0A1128] font-bold text-xl shadow-md">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[var(--accent)] text-[var(--on-accent)] font-bold text-xl ">
                             ⚖️
                         </div>
-                        <span className="font-[family-name:var(--font-amiri)] text-2xl font-bold text-[#F4F6FC]">
+                        <span className="font-[family-name:var(--font-arabic)] text-2xl font-bold text-[var(--label)]">
                             نادي الوعي القانوني
                         </span>
                     </div>
-                    <p className="text-xs text-[#F4F6FC]/60 leading-relaxed max-w-sm">
+                    <p className="text-xs text-[var(--label)]/60 leading-relaxed max-w-sm">
                         فكرةٌ، أهدافٌ، وهيكلٌ تنظيمي نحو فضاء جامعي واعٍ. كلية الحقوق والعلوم السياسية - جامعة باتنة 1.
                     </p>
                     {/* Social Icons */}
@@ -67,7 +67,7 @@ export default function Footer() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={s.label}
-                                className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] transition-all duration-200 hover:bg-[#D4AF37] hover:text-[#0A1128] hover:scale-110"
+                                className="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--accent)]/30 text-[var(--accent)] transition-all duration-200 hover:bg-[var(--accent)] hover:text-[var(--on-accent)] hover:scale-110"
                             >
                                 {s.icon}
                             </a>
@@ -76,21 +76,21 @@ export default function Footer() {
                 </div>
 
                 {/* روابط سريعة */}
-                <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs font-bold text-[#D4AF37]/80">
-                    <a href="/" className="hover:text-[#D4AF37] transition-colors">الرئيسية</a>
-                    <a href="#about" className="hover:text-[#D4AF37] transition-colors">عن النادي</a>
-                    <a href="#goals" className="hover:text-[#D4AF37] transition-colors">الأهداف</a>
-                    <a href="/join" className="hover:text-[#D4AF37] transition-colors">الانضمام والنظام الداخلي</a>
-                    <a href="/blogs" className="hover:text-[#D4AF37] transition-colors">المجلة الرقمية</a>
-                    <a href="/activities" className="hover:text-[#D4AF37] transition-colors">النشاطات القادمة</a>
+                <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs font-bold text-[var(--accent)]/80">
+                    <a href="/" className="hover:text-[var(--accent)] transition-colors">الرئيسية</a>
+                    <a href="#about" className="hover:text-[var(--accent)] transition-colors">عن النادي</a>
+                    <a href="#goals" className="hover:text-[var(--accent)] transition-colors">الأهداف</a>
+                    <a href="/join" className="hover:text-[var(--accent)] transition-colors">الانضمام والنظام الداخلي</a>
+                    <a href="/blogs" className="hover:text-[var(--accent)] transition-colors">المجلة الرقمية</a>
+                    <a href="/activities" className="hover:text-[var(--accent)] transition-colors">النشاطات القادمة</a>
                 </div>
 
                 {/* حقوق النشر والآية */}
                 <div className="text-center md:text-left space-y-2">
-                    <p className="font-[family-name:var(--font-amiri)] text-base text-[#D4AF37] font-extrabold">
+                    <p className="font-[family-name:var(--font-arabic)] text-base text-[var(--accent)] font-extrabold">
                         ﴿ اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ ﴾
                     </p>
-                    <p className="text-[11px] text-[#F4F6FC]/40 font-medium">
+                    <p className="text-[11px] text-[var(--label)]/40 font-medium">
                         جميع الحقوق محفوظة © {new Date().getFullYear()} نادي الوعي القانوني - باتنة 1
                     </p>
                     <div className="flex justify-center md:justify-start gap-2 pt-1">
@@ -101,7 +101,7 @@ export default function Footer() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={s.label}
-                                className="text-[10px] text-[#D4AF37]/60 hover:text-[#D4AF37] transition-colors font-semibold"
+                                className="text-[10px] text-[var(--accent)]/60 hover:text-[var(--accent)] transition-colors font-semibold"
                             >
                                 {s.label}
                             </a>
@@ -111,7 +111,7 @@ export default function Footer() {
             </div>
 
             {/* Bottom glow */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-[var(--accent)]/40 to-transparent" />
         </footer>
     );
 }

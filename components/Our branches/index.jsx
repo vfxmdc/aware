@@ -49,7 +49,7 @@ export default function OurBranches() {
         <section
             id="contact"
             dir="rtl"
-            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#F1E8DC]/60 py-20 font-[family-name:var(--font-tajawal)] text-[#5C4732]`}
+            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#F1E8DC]/60 py-20 font-[family-name:var(--font-arabic)] text-[#5C4732]`}
         >
             <IslamicPattern id="pat-branch" className="absolute inset-0 h-full w-full animate-pattern-drift text-[#8B6F52]/35" />
 
@@ -58,7 +58,7 @@ export default function OurBranches() {
                 <span className="mb-4 inline-block rounded-full bg-[#FAF6F0] px-4 py-1.5 text-xs font-bold tracking-widest text-[#8B6F52]">
                     ✦ شبكتنا
                 </span>
-                <h2 className="font-[family-name:var(--font-amiri)] text-4xl font-bold md:text-5xl">فروعنا في الجزائر</h2>
+                <h2 className="font-[family-name:var(--font-arabic)] text-4xl font-bold md:text-5xl">فروعنا في الجزائر</h2>
                 <p className="mt-3 font-light text-[#8B6F52]">
                     متواجدون في جميع أنحاء الجزائر لخدمتكم — تفضلوا بزيارة أقرب فرع لكم
                 </p>
@@ -69,7 +69,7 @@ export default function OurBranches() {
                 {branches.map((branch, i) => (
                     <div
                         key={i}
-                        className="group overflow-hidden rounded-2xl bg-white shadow-sm shadow-[#5C4732]/10 transition-all duration-150 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#5C4732]/15"
+                        className="group overflow-hidden rounded-2xl bg-white shadow-sm shadow-[#5C4732]/10 transition-all duration-150 hover:-translate-y-1 hover: hover:shadow-[#5C4732]/15"
                     >
                         {/* Branch image */}
                         <div className="relative h-36 overflow-hidden">
@@ -85,7 +85,7 @@ export default function OurBranches() {
 
                         {/* Info */}
                         <div className="p-5">
-                            <h3 className="mb-1 font-[family-name:var(--font-amiri)] text-base font-bold leading-snug">{branch.name}</h3>
+                            <h3 className="mb-1 font-[family-name:var(--font-arabic)] text-base font-bold leading-snug">{branch.name}</h3>
                             <p className="mb-3 text-xs text-[#8B6F52]">📍 {branch.address}</p>
 
                             <div className="space-y-1.5">

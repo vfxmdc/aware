@@ -63,7 +63,7 @@ export default function TravelProcess() {
     return (
         <section
             dir="rtl"
-            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#F1E8DC]/50 py-20 font-[family-name:var(--font-tajawal)] text-[#5C4732]`}
+            className={`${amiri.variable} ${tajawal.variable} relative overflow-hidden bg-[#F1E8DC]/50 py-20 font-[family-name:var(--font-arabic)] text-[#5C4732]`}
         >
             <IslamicPattern id="pat-process" className="absolute inset-0 h-full w-full animate-pattern-drift text-[#8B6F52]/35" />
 
@@ -72,7 +72,7 @@ export default function TravelProcess() {
                 <span className="mb-4 inline-block rounded-full bg-[#FAF6F0] px-4 py-1.5 text-xs font-bold tracking-widest text-[#8B6F52]">
                     ✦ كيف نعمل
                 </span>
-                <h2 className="font-[family-name:var(--font-amiri)] text-4xl font-bold md:text-5xl">عملية الحجز خطوة بخطوة</h2>
+                <h2 className="font-[family-name:var(--font-arabic)] text-4xl font-bold md:text-5xl">عملية الحجز خطوة بخطوة</h2>
                 <p className="mt-3 font-light text-[#8B6F52]">عملية سلسة ومريحة مصممة لتحقيق رحلة أحلامك</p>
             </div>
 
@@ -87,13 +87,13 @@ export default function TravelProcess() {
 
                         <div className="relative flex flex-col items-center text-center">
                             {/* Number badge */}
-                            <div className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#8B6F52] text-lg font-bold text-[#FAF6F0] shadow-lg shadow-[#5C4732]/20 transition-all duration-150 group-hover:scale-110 group-hover:bg-[#5C4732]">
+                            <div className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#8B6F52] text-lg font-bold text-[#FAF6F0]  shadow-[#5C4732]/20 transition-all duration-150 group-hover:scale-110 group-hover:bg-[#5C4732]">
                                 <span>{step.number}</span>
                                 <div className="absolute -inset-1.5 rounded-full border border-[#C9A876]/40" />
                             </div>
 
                             <div className="mb-3 text-3xl">{step.icon}</div>
-                            <h3 className="mb-2 font-[family-name:var(--font-amiri)] text-xl font-bold">{step.title}</h3>
+                            <h3 className="mb-2 font-[family-name:var(--font-arabic)] text-xl font-bold">{step.title}</h3>
                             <p className="text-sm font-light leading-relaxed text-[#8B6F52]">{step.description}</p>
                         </div>
                     </div>
