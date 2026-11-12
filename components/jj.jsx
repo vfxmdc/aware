@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Amiri, Tajawal } from "next/font/google";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
-
-const amiri = Amiri({ subsets: ["arabic"], weight: ["700"], variable: "--font-amiri" });
-const tajawal = Tajawal({ subsets: ["arabic"], weight: ["300", "400", "500", "700"], variable: "--font-tajawal" });
+import TiltCard from "@/components/TiltCard";
 
 /* ── أيقونة مصباح المعرفة (Lamp of Knowledge) ── */
 function LampIcon({ className = "w-10 h-10" }) {
@@ -58,39 +55,8 @@ function KnowledgePattern({ id, className, animate = false }) {
 
 export default function HeroSection() {
     const [mounted, setMounted] = useState(false);
-    const cardRef = useRef(null);
 
     useEffect(() => setMounted(true), []);
-
-    useEffect(() => {
-        const card = cardRef.current;
-        if (!card) return;
-
-        const handleMouseMove = (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = ((y - centerY) / centerY) * -12;
-            const rotateY = ((x - centerX) / centerX) * 12;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        };
-
-        const handleMouseLeave = () => {
-            card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
-        };
-
-        card.addEventListener("mousemove", handleMouseMove);
-        card.addEventListener("mouseleave", handleMouseLeave);
-
-        return () => {
-            card.removeEventListener("mousemove", handleMouseMove);
-            card.removeEventListener("mouseleave", handleMouseLeave);
-        };
-    }, []);
 
     const reveal = (delay) =>
         `transition-all duration-700 ease-out ${mounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`
@@ -103,7 +69,7 @@ export default function HeroSection() {
     ];
 
     return (
-        <div id="hero" dir="rtl" className={`${amiri.variable} ${tajawal.variable} bg-[var(--input)] font-[family-name:var(--font-arabic)] text-[var(--label)]`}>
+        <div id="hero" dir="rtl" className={`font-[family-name:var(--font-arabic)] text-[var(--label)]`}>
             <Navbar />
 
             {/* ── قسم واجهة البطل الرئيسية (Hero Section) ── */}
@@ -157,14 +123,46 @@ export default function HeroSection() {
                     </div>
 
                     {/* البطاقة التفاعلية البارزة */}
-                    <div
-                        ref={cardRef}
-                        className={`relative flex min-h-[380px] flex-col items-center justify-center overflow-hidden rounded-[22px] border-2 border-[var(--accent)]/30 bg-gradient-to-br from-[var(--surface)] via-[var(--bg)] to-[var(--surface)] p-8 text-center shadow-2xl transition-transform duration-200 ease-out will-change-transform lg:min-h-[460px] ${reveal(300)}`}
+                    <div className={`relative px-4 py-10 sm:px-10 ${reveal(300)}`}>
+                    {/* وهج ذهبي خلف البطاقة */}
+                    <div aria-hidden className="absolute inset-10 rounded-full bg-[var(--accent)]/25 blur-3xl animate-pulse" />
+
+                    {/* بطاقات عائمة إضافية */}
+                    <TiltCard phase={2.1} speed={0.8} max={22} idleX={10} idleY={14}
+                        className="glass-strong absolute -top-2 -right-1 z-20 hidden rounded-[20px] px-4 py-3 sm:block">
+                        <div className="flex items-center gap-3 [transform:translateZ(30px)]">
+                            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)]/15 text-[var(--accent)]"><ScalesIcon className="w-6 h-6" /></span>
+                            <div className="text-start">
+                                <span className="block text-sm font-bold text-[var(--label)]">وعي قانوني</span>
+                                <span className="block text-[11px] text-[var(--label)]/60">ندوات وأيام دراسية</span>
+                            </div>
+                        </div>
+                    </TiltCard>
+                    <TiltCard phase={4.3} speed={0.9} max={22} idleX={9} idleY={13}
+                        className="glass-strong absolute -bottom-1 -left-1 z-20 hidden rounded-[20px] px-4 py-3 sm:block">
+                        <div className="flex items-center gap-3 [transform:translateZ(30px)]">
+                            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)]/15 text-[var(--accent)]"><LampIcon className="w-6 h-6" /></span>
+                            <div className="text-start">
+                                <span className="block text-sm font-bold text-[var(--label)]">من أجل وعيٍ مستديم</span>
+                                <span className="block text-[11px] text-[var(--label)]/60">علم · ثقافة · قانون</span>
+                            </div>
+                        </div>
+                    </TiltCard>
+                    <TiltCard phase={1.2} speed={1.1} max={25} idleX={12} idleY={16}
+                        className="glass-strong absolute top-1/2 -left-3 z-20 hidden h-16 w-16 items-center justify-center rounded-2xl text-3xl lg:flex">
+                        <span className="[transform:translateZ(25px)]">📜</span>
+                    </TiltCard>
+
+                    <TiltCard
+                        className="glass relative z-10 flex min-h-[380px] flex-col items-center justify-center overflow-hidden rounded-[28px] border-[var(--accent)]/30 p-8 text-center lg:min-h-[460px]"
                     >
                         <KnowledgePattern id="pat-card" className="absolute inset-0 h-full w-full text-[var(--accent)]/20" animate />
+                        <div aria-hidden className="absolute -top-16 -left-16 h-48 w-48 rounded-full bg-[var(--accent)]/30 blur-3xl" />
+                        <div aria-hidden className="absolute -bottom-20 -right-16 h-52 w-52 rounded-full bg-[var(--accent)]/15 blur-3xl" />
 
+                        <div className="relative flex flex-col items-center [transform-style:preserve-3d]">
                         {/* أيقونات شرفية في الأعلي */}
-                        <div className="relative mb-6 flex items-center justify-center gap-6">
+                        <div className="relative mb-6 flex items-center justify-center gap-6 [transform:translateZ(60px)]">
                             <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[var(--accent)]/40 glass text-[var(--accent)] ">
                                 <LampIcon className="w-10 h-10" />
                             </div>
@@ -200,6 +198,8 @@ export default function HeroSection() {
                                 </a>
                             ))}
                         </div>
+                        </div>
+                    </TiltCard>
                     </div>
                 </div>
             </section>
